@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CONNECTIFY - Contact Book</title>
+    <link rel="stylesheet" href="../css/Dashboard.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+      integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+  </head>
+  <body>
+    <div class="main-div">
+      <div class="header">
+        <img src="../images/logo.png" alt="logo" class="logo" />
+        <i class="fa-solid fa-power-off" onclick="logout()"></i>
+      </div>
+      <div class="side-bar-container">
+        <div class="side-bar">
+          <div class="user-logo-container">
+            <img
+              src="https://cdn-icons-png.flaticon.com/128/1177/1177568.png"
+              alt="user"
+              class="user-logo"
+            />
+            <i class="fa-sharp fa-solid fa-camera"></i>
+          </div>
+          <p class="username">@Username</p>
+          <div class="phone">
+            <i class="fa-sharp fa-solid fa-mobile-retro"></i>
+            <p class="phone-number">9988776655</p>
+          </div>
+          <button class="edit-profile" onclick="editProfile()">
+            Edit Profile
+          </button>
+        </div>
+        <i class="fa-sharp fa-solid fa-rocket"></i>
+      </div>
+
+      <div class="contacts-main-container">
+        <div class="contact-types">
+          <div class="contact-types-btn contacts" onclick="showAll()">
+            <i class="fa-sharp fa-solid fa-users"></i>
+            <p>Contacts</p>
+          </div>
+          <div class="contact-types-btn favourites" onclick="showStarred()">
+            <i class="fa-sharp fa-solid fa-star"></i>
+            <p>Favourites</p>
+          </div>
+        </div>
+
+        <div class="display-contacts">
+          <div class="search-bar">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input
+              type="text"
+              name="search"
+              id="search"
+              class="search"
+              placeholder="Search contacts"
+            />
+            <i class="fa-solid fa-microphone"></i>
+          </div>
+          <div class="create-new-contact">
+            <i class="fa-solid fa-user-plus"></i>
+            <p onclick="createContact()">Create new contact</p>
+          </div>
+          <div class="contact-list"></div>
+        </div>
+      </div>
+      <div class="edit-profile-outer-container">
+        <div class="edit-profile-container">
+          <h2>Edit Profile</h2>
+          <div>
+            <label for="username">Username : </label>
+            <input type="text" name="username" id="username" readonly />
+            <i class="fa-solid fa-pen" onclick="makeMeEditable('username')"></i>
+          </div>
+          <div>
+            <label for="phone">Phone Number : </label>
+            <input type="number" name="phone" id="phone" readonly />
+            <i class="fa-solid fa-pen" onclick="makeMeEditable('phone')"></i>
+          </div>
+          <button class="btn save" onclick="save()">Save</button>
+          <button
+            class="btn cancel"
+            onclick="cancel('edit-profile-outer-container')"
+          >
+            Cancel
+          </button>
+        </div>
+      </div>
+
+      <div class="create-contact-outer-container">
+        <div class="create-contact-container">
+          <h2>Create Contact</h2>
+          <div class="file-input">
+            <input type="file" id="my-file" />
+            <label for="my-file">
+              <img src="../images/contact.png" alt="Choose a file" />
+            </label>
+          </div>
+
+          <input type="text" name="name" id="name" placeholder="Contact Name" />
+          <input
+            type="number"
+            name="phoneNumber"
+            id="phoneNumber"
+            placeholder="Contact Number"
+          />
+          <p>Is Starred <input type="checkbox" name="star" id="star" /></p>
+          <button class="btn create" onclick="Create()">Create</button>
+          <button
+            class="btn cancel"
+            onclick="cancel('create-contact-outer-container')"
+          >
+            Cancel
+          </button>
+        </div>
+      </div>
+
+      <div class="label">Created By : Aastha Rathi</div>
+    </div>
+    <script>
+      //onload events
+      const result = JSON.parse(localStorage.getItem("result"));
+      document.querySelector(".phone-number").innerHTML = result.phone;
+      document.querySelector(".username").innerHTML = result.username;
+
+      const sideBar = document.querySelector(".side-bar");
+      const sideBarContainer = document.querySelector(".side-bar-container");
+      const faRocket = document.querySelector(".fa-rocket");
+      sideBar.style.maxWidth = "0px";
+      sideBar.style.padding = "0 0";
+      sideBar.style.overflow = "hidden";
+
+      faRocket.addEventListener("click", () => {
+        if (sideBar.style.maxWidth == "0px") {
+          sideBar.style.maxWidth = "80%";
+          sideBar.style.zIndex = "9999";
+        } else {
+          sideBar.style.maxWidth = "0px";
+          sideBar.style.padding = "0 0";
+          sideBar.style.overflow = "hidden";
+        }
+      });
+
+      const contactTypesBtn = document.querySelectorAll(".contact-types-btn");
+      contactTypesBtn[0].addEventListener("click", () => {
+        contactTypesBtn[1].style.boxShadow = "none";
+        contactTypesBtn[0].style.boxShadow = "inset 0 0 10px rgba(0,0,0,0.3)";
+      });
+
+      contactTypesBtn[1].addEventListener("click", () => {
+        contactTypesBtn[0].style.boxShadow = "none";
+        contactTypesBtn[1].style.boxShadow = "inset 0 0 10px rgba(0,0,0,0.3)";
+      });
+
+      const contactList = [
+        {
+          name: "Ram",
+          phone: 9988776655,
+          img: "../images/contact.png",
+          starred: true,
+        },
+        {
+          name: "Shyam",
+          phone: 7766554433,
+          img: "../images/contact.png",
+          starred: false,
+        },
+        {
+          name: "Laxman",
+          phone: 1122334455,
+          img: "../images/contact.png",
+          starred: false,
+        },
+        {
+          name: "Sita",
+          phone: 9911553322,
+          img: "../images/contact.png",
+          starred: true,
+        },
+      ];
+
+      const contactListContainer = document.querySelector(".contact-list");
+
+      contactList.map((curr, indx) => {
+        const data = `<div class="contact">
+        <img src=${curr.img} alt="contact logo" class="contact-logo" />
+        <p>${curr.name}</p>
+          </div>`;
+
+        contactListContainer.insertAdjacentHTML("beforeend", data);
+      });
+
+      const username = document.getElementById("username");
+      const phone = document.getElementById("phone");
+      username.value = "@username";
+      phone.value = 9988776655;
+
+      function makeMeEditable(e) {
+        document.getElementById(e).readOnly = false;
+      }
+
+      const save = () => {
+        try {
+          document.querySelector(".phone-number").innerHTML =
+            document.getElementById("phone").value;
+          document.querySelector(".username").innerHTML =
+            document.getElementById("username").value;
+
+          alert("Save Successfully !!");
+          cancel("edit-profile-outer-container");
+        } catch (err) {
+          alert(err);
+        }
+      };
+
+      const editProfileOuterContainer = document.querySelector(
+        ".edit-profile-outer-container"
+      );
+      const createContactOuterContainer = document.querySelector(
+        ".create-contact-outer-container"
+      );
+
+      editProfileOuterContainer.style.maxHeight = "0vh";
+      editProfileOuterContainer.style.overflow = "hidden";
+      createContactOuterContainer.style.maxHeight = "0vh";
+      createContactOuterContainer.style.overflow = "hidden";
+
+      const editProfile = () => {
+        editProfileOuterContainer.style.maxHeight = "100vh";
+      };
+
+      const createContact = () => {
+        createContactOuterContainer.style.maxHeight = "100vh";
+      };
+
+      const cancel = (e) => {
+        // alert(e);
+        const eContainer = document.querySelector(`.${e}`);
+        eContainer.style.maxHeight = "0vh";
+        eContainer.style.overflow = "hidden";
+      };
+
+      const logo = document.querySelector(".logo");
+      logo.addEventListener("click", () => {
+        window.location.href = "../index.html";
+      });
+
+      const logout = () => {
+        window.location.href = "../index.html";
+      };
+
+      const showAll = () => {
+        contactListContainer.innerHTML = "";
+        contactList.map((curr) => {
+          const data = `<div class="contact" onclick="viewContact('${curr.phone}')">
+        <img src=${curr.img} alt="contact logo" class="contact-logo" />
+        <p>${curr.name}</p>
+          </div>`;
+
+          contactListContainer.insertAdjacentHTML("beforeend", data);
+        });
+      };
+
+      const isStarred = (e) => {
+        if (e.starred) {
+          return true;
+        } else {
+          return false;
+        }
+      };
+
+      const showStarred = () => {
+        contactListContainer.innerHTML = "";
+        contactList.filter(isStarred).map((curr) => {
+          const data = `<div class="contact" onclick="viewContact('${curr.phone}')">
+        <img src=${curr.img} alt="contact logo" class="contact-logo" />
+        <p>${curr.name}</p>
+          </div>`;
+
+          contactListContainer.insertAdjacentHTML("beforeend", data);
+        });
+      };
+
+      const Create = () => {
+        try {
+          const contactPic = document.getElementById("my-file").value;
+          const contactName = document.getElementById("name").value;
+          const contactPN = document.getElementById("phoneNumber").value;
+          const starred = document.getElementById("star");
+          const value = starred.checked ? true : false;
+          const newObj = {
+            name: contactName,
+            phone: contactPN,
+            img: contactPic,
+            starred: value,
+          };
+          contactList.push(newObj);
+          alert("Contact Created Successfully !!");
+          showAll();
+          cancel("create-contact-outer-container");
+        } catch (err) {
+          alert(err);
+        }
+      };
+
+      const viewContact = (e) => {
+        alert(e);
+      };
+
+      const fileInput = document.querySelector("#my-file");
+      const label = fileInput.nextElementSibling;
+
+      fileInput.addEventListener("change", (event) => {
+        const fileName = event.target.value.split("\\").pop();
+        label.querySelector("span").textContent = fileName;
+      });
+    </script>
+  </body>
+</html>

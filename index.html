@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CONNECTIFY - Contact Book</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="main-div">
+      <img src="./images/logo.png" alt="logo" class="logo" />
+      <div class="text">
+        <h2>CONNECTIFY</h2>
+        <h3>Connecting you to the world: Connectify</h3>
+        <p>
+          A contact book manager web application is a tool used to organize and
+          manage contact information in one central location. It allows users to
+          store and edit contact details such as name, email address, phone
+          number, and other relevant information. The application is accessible
+          online, making it easy for users to access their contacts from any
+          device with an internet connection.
+        </p>
+      </div>
+      <div class="container">
+        <div class="login-outer">
+          <button class="register">+</button>
+          <div class="login-form">
+            <h2>Login</h2>
+            <input
+              type="text"
+              name="username"
+              id="loginUsername"
+              placeholder="Username"
+            />
+            <input
+              type="password"
+              name="password"
+              id="loginPassword"
+              placeholder="Password"
+            />
+            <button class="btn login-btn" onclick="validateAndLogin()">
+              Go
+            </button>
+            <a href="#">Forget your password?</a>
+          </div>
+        </div>
+        <div class="register-form">
+          <h2>Register</h2>
+          <input
+            type="text"
+            name="username"
+            id="username"
+            placeholder="Username"
+          />
+          <input
+            type="number"
+            name="phone"
+            id="phone"
+            placeholder="Phone Number"
+          />
+          <input
+            type="password"
+            name="password"
+            id="password"
+            placeholder="Password"
+          />
+          <input
+            type="password"
+            name="cpassword"
+            id="cpassword"
+            placeholder="Confirm Password"
+          />
+          <button class="btn register-btn" onclick="validateAndRegister()">
+            Register
+          </button>
+        </div>
+      </div>
+      <div class="label">Created By : Aastha Rathi</div>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>

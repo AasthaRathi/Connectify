@@ -1,0 +1,168 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Courier New", Courier, monospace;
+  transition: all 0.3s;
+}
+
+.main-div {
+  width: 100%;
+  height: 100vh;
+  background: #2f3640;
+}
+
+.logo {
+  position: absolute;
+  cursor: pointer;
+  width: 20%;
+  height: 15%;
+  margin-top: 1.5%;
+  margin-left: 3%;
+  object-fit: cover;
+}
+
+.container {
+  width: 100%;
+  padding: 8% 0;
+}
+
+.login-outer {
+  position: relative;
+}
+
+.register {
+  position: absolute;
+  top: 1rem;
+  right: 8%;
+  z-index: 99;
+}
+
+.login-form {
+  position: absolute;
+  right: 10%;
+}
+
+.login-form,
+.register-form {
+  background: #fff;
+  width: 25%;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 3% 3%;
+  border-radius: 20px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+
+.register-form {
+  width: 28%;
+  position: absolute;
+  right: 10%;
+  z-index: 999;
+}
+
+.login-form h2,
+.register-form h2 {
+  color: #eb3b5a;
+  text-transform: uppercase;
+  font-size: 25px;
+}
+
+.login-form input,
+.register-form input {
+  font-size: 20px;
+  border: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+  padding: 2% 2%;
+  outline: none;
+}
+
+.login-form input:focus,
+.register-form input:focus {
+  border-bottom: 1px solid rgba(45, 152, 218, 0.9);
+}
+
+.login-form input:nth-child(1),
+.login-form input:nth-child(1) {
+  margin-top: 1rem;
+}
+
+.btn {
+  cursor: pointer;
+  border: none;
+  padding: 4% 0;
+  font-size: 18px;
+  width: 40%;
+  color: gray;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.3);
+}
+
+.btn:hover {
+  box-shadow: 0 0 2px rgba(45, 152, 218, 0.9);
+  color: #2d98da;
+}
+
+.register-btn {
+  width: 50%;
+  background: #eb3b5a;
+  color: #fff;
+  padding: 4% 6%;
+}
+
+.register-btn:hover {
+  color: #eb3b5a;
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.register {
+  cursor: pointer;
+  border-radius: 50%;
+  font-size: 35px;
+  padding: 0.8% 1.5%;
+  font-weight: 900;
+  color: #fff;
+  background: #eb3b5a;
+  border: none;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.1);
+}
+
+a {
+  text-decoration: none;
+  color: gray;
+}
+
+a:hover {
+  color: #2d98da;
+}
+
+.text {
+  float: left;
+  width: 55%;
+  margin-top: 15%;
+  padding: 0 4%;
+  color: #fff;
+}
+
+.text h2 {
+  color: #eb3b5a;
+  font-size: 35px;
+}
+
+.text h3 {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.text p {
+  margin: 4% 0;
+  color: gray;
+}
+
+.label {
+  position: absolute;
+  bottom: 10%;
+  border-radius: 0 20px 20px 0;
+  background: #eb3b5a;
+  color: #fff;
+  padding: 1% 2%;
+}
